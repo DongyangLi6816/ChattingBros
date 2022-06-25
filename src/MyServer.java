@@ -13,7 +13,7 @@ public class MyServer{
             Socket socket = serversocket.accept();
             System.out.println(socket.getPort() + " is connected");
 
-            // reveive & send message
+            // receive & send message
             OutputStream os = socket.getOutputStream();
             os.write("Hello World!".getBytes());
             Scanner sc = new Scanner(System.in);
@@ -22,7 +22,7 @@ public class MyServer{
             while(true){
                 String msg = sc.nextLine();
                 // if detected "exit", end the connection
-                if(msg == "exit"){
+                if(msg.equals("exit")){
                     os.close();
                     socket.close();
                     break;
