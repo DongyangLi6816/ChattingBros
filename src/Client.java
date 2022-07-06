@@ -44,14 +44,6 @@ public class Client {
         }
     }
 
-    public byte[] intToByte(int num){
-        byte[] bytes = new byte[4];
-        bytes[0] = (byte) ((num >> 24) & 0xff);
-        bytes[1] = (byte) ((num >> 16) & 0xff);
-        bytes[2] = (byte) ((num >> 8) & 0xff);
-        bytes[3] = (byte) (num & 0xff);
-        return bytes;
-    }
     public static void main(String[] args) {
         Client client = new Client();
         client.initClient("lidongyangMacBook-Pro.local", 5888);
@@ -60,13 +52,16 @@ public class Client {
         int[] intmsg = {1,2,3,4,5,6,7,8,9,0};
         byte[] intmsgByte = new byte[intmsg.length*4];
         for (int i = 0; i < intmsgByte.length; i++) {
-            byte[] bytes = client.intToByte(intmsg[i]);
-            for (int j = 0; j < 4; j++) {
-                intmsg[i*4+j] = bytes[j];
-            }
+            byte[] bytes = DataTools.intToByte(intmsg[i]);
+            DataTools.bytesArrayToByteArr(intmsgByte, bytes);
         }
         client.send(intmsgByte, 1);
-        Scanner scanner = new Scanner(System.in);
-        scanner.nextLine();
+        try (Scanner scanner = new Scanner(System.in)) {
+            while(true){
+                int msgint = scanner.nextInt();
+                byte[] msgByteInt = DataTools.intToByte(msgint);
+                client.send(msgByteInt, 1); 
+            }
+        }
     }
 }

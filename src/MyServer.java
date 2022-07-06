@@ -43,9 +43,10 @@ public class MyServer{
                 System.out.println("Message: " + msg);
             }else if(msgType == 1){
                 System.out.print("number received: ");
-                for (int i = 0; i < msgData.length; i++){
+                for (int i = 0; i < msgData.length; i+=4){
                     int num = msgData[i + 0] << 24
                             | msgData[i + 1] << 16
+                            | msgData[i + 2] << 8
                             | msgData[i + 3];
                     System.out.print(num);
                 }
