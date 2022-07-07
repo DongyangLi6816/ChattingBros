@@ -16,6 +16,7 @@ public class ChatServer {
 
     public Socket listenClient(){
         try{
+            System.out.println("Listening....");
             return serverScocket.accept();
         }catch(Exception e){
             e.printStackTrace();
@@ -50,7 +51,7 @@ public class ChatServer {
         cs.initServer(5888);
         Socket client = cs.listenClient();
         ChatUI chatUI = new ChatUI(client);
-        JTextArea textArea = chatUI.initUI("Client " + 5888 + " chat room");
+        JTextArea textArea = chatUI.initUI("Server" + 5888 + " chat room");
         cs.readMsg(textArea, client);
     }
 }
